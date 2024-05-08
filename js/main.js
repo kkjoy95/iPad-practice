@@ -69,3 +69,39 @@ function hideSearch() {
 }
 
 
+const io = new IntersectionObserver(entries => {
+    // entries는 `io.observe(el)`로 등록된 모든 관찰 대상 배열.
+    entries.forEach(entry => {
+      // 사라질 때.
+      if (!entry.isIntersecting) {
+        return
+      }
+      entry.target.classList.add('show')
+    })
+  })
+  // 관찰할 요소들 검색
+  const infoEls = document.querySelectorAll('.info')
+  // 관찰 시작!
+  infoEls.forEach(el => io.observe(el))
+
+
+  // 비디오 재생!
+const video = document.querySelector('.stage video')
+const playBtn = document.querySelector('.stage .controller--play')
+const pauseBtn = document.querySelector('.stage .controller--pause')
+
+// Google 자동 재생 정책 확인! - https://developer.chrome.com/blog/autoplay/#audiovideo-elements
+// video.play()
+//   .then(played)
+//   .catch(paused)
+
+playBtn.addEventListener('click', () => {
+    video.play()
+    playBtn.classList.add('hide')
+    pauseBtn.classList.remove('hide')
+  })
+  pauseBtn.addEventListener('click', () => {
+    video.pause()
+    playBtn.classList.remove('hide')
+    pauseBtn.classList.add('hide')
+  })
